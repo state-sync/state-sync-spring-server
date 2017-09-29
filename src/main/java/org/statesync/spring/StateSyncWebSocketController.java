@@ -32,7 +32,7 @@ public class StateSyncWebSocketController {
 	 * @param accessor
 	 * @return session initialization command
 	 */
-	@SubscribeMapping("/connect")
+	@SubscribeMapping("/root")
 	public InitSessionResponse connect(final SimpMessageHeaderAccessor accessor) {
 		final Principal principal = accessor.getUser();
 		final String externalSessionId = accessor.getSessionId();
