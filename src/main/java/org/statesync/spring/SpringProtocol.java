@@ -13,12 +13,14 @@ public class SpringProtocol implements SyncOutbound {
 	@Autowired
 	private SimpMessagingTemplate simpMessagingTemplate;
 
+	@Override
 	public void broadcast(final String userToken, final EventMessage event) {
-
+		this.simpMessagingTemplate.convertAndSend("/user/" + userToken, event);
 	}
 
-	public void send(final String sessionId, final ResponseMessage event) {
-
+	@Override
+	public void send(final String sessionToken, final ResponseMessage event) {
+		this.simpMessagingTemplate.convertAndSend("/session/" + sessionToken, event);
 	}
 
 }
