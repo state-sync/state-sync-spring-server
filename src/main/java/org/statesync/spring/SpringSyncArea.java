@@ -37,7 +37,7 @@ public class SpringSyncArea<Model> {
 		return this.config;
 	}
 
-	private StateStorage<Model> getStateStorage() {
+	protected StateStorage<Model> getStateStorage() {
 		return new InMemoryStateStorage<>(this::newModel);
 	}
 

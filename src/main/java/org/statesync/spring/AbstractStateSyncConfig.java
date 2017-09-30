@@ -9,7 +9,7 @@ public class AbstractStateSyncConfig extends AbstractWebSocketMessageBrokerConfi
 
 	@Override
 	public void configureMessageBroker(final MessageBrokerRegistry registry) {
-		registry.enableSimpleBroker("/connect", "/session", "/user");
+		registry.enableSimpleBroker("/root", "/session", "/user");
 	}
 
 	protected String getAllowedOrigins() {
@@ -20,6 +20,7 @@ public class AbstractStateSyncConfig extends AbstractWebSocketMessageBrokerConfi
 		return "/state-sync";
 	}
 
+	@Override
 	public void registerStompEndpoints(final StompEndpointRegistry registry) {
 		registry.addEndpoint(getEndpointPath()).setAllowedOrigins(getAllowedOrigins())
 				.addInterceptors(new HttpSessionIdHandshakeInterceptor());
