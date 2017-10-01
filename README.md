@@ -1,6 +1,6 @@
 # state-sync-spring-server
 
-WARNING: It is in development and I would not sugegst to use it until version 1.0.
+WARNING: It is in development and I would not suggest to use it until version 1.0.
 
 Spring based server for state-sync.
 
