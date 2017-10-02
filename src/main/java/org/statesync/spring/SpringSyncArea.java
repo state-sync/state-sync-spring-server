@@ -37,7 +37,11 @@ public class SpringSyncArea<Model> {
 		return this.config;
 	}
 
-	protected StateStorage<Model> getStateStorage() {
+	protected StateStorage<Model> getSessionStateStorage() {
+		return new InMemoryStateStorage<>(this::newModel);
+	}
+
+	protected StateStorage<Model> getUserStateStorage() {
 		return new InMemoryStateStorage<>(this::newModel);
 	}
 
@@ -56,10 +60,10 @@ public class SpringSyncArea<Model> {
 	}
 
 	private SyncArea<Model> newSyncArea() {
-		return new SyncArea<Model>(getConfig(), getStateStorage(), this::process);
+		return new SyncArea<Model>(getConfig(), getUserStateStorage(), getSessionStateStorage(), this::process);
 	}
 
-	protected Model process(final Model model, final SyncAreaUser user) {
+	protected Model process(final Model model, final SyncAreaUser<Model> user) {
 		return model;
 	}
 }

@@ -2,8 +2,7 @@ package org.statesync.spring;
 
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.statesync.SyncOutbound;
-import org.statesync.protocol.EventMessage;
-import org.statesync.protocol.ResponseMessage;
+import org.statesync.protocol.Message;
 
 public class SpringProtocol implements SyncOutbound {
 
@@ -14,12 +13,7 @@ public class SpringProtocol implements SyncOutbound {
 	}
 
 	@Override
-	public void broadcast(final String userToken, final EventMessage event) {
-		this.simpMessagingTemplate.convertAndSend("/account/" + userToken, event);
-	}
-
-	@Override
-	public void send(final String sessionToken, final ResponseMessage event) {
+	public void send(final String sessionToken, final Message event) {
 		this.simpMessagingTemplate.convertAndSend("/session/" + sessionToken, event);
 	}
 
