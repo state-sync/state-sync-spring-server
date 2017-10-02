@@ -42,8 +42,13 @@ public class StateSyncWebSocketController {
 	@MessageMapping("/session/{sessionToken}")
 	public void sessionRequest(final @DestinationVariable String sessionToken, final JsonNode cmd,
 			final SimpMessageHeaderAccessor accessor) {
-		final RequestMessage request = this.requestFactory.parse(cmd);
-		this.syncService.handle(sessionToken, request);
+		try {
+			final RequestMessage request = this.requestFactory.parse(cmd);
+			this.syncService.handle(sessionToken, request);
+		} catch (final Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@MessageMapping("/user/{userToken}")

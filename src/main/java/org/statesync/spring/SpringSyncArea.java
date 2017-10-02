@@ -16,7 +16,7 @@ public class SpringSyncArea<Model> {
 	private SyncAreaConfig<Model> config;
 
 	@Autowired
-	private SpringSyncService service;
+	protected SpringSyncService service;
 
 	public SyncArea<Model> getArea() {
 		return this.area;
