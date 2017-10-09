@@ -1,14 +1,20 @@
 package org.statesync.spring;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.statesync.InMemoryStateStorage;
+import org.statesync.SignalHandler;
 import org.statesync.StateStorage;
 import org.statesync.SyncArea;
 import org.statesync.SyncAreaUser;
 import org.statesync.config.SyncAreaConfig;
+
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class SpringSyncArea<Model> {
 
@@ -17,6 +23,8 @@ public class SpringSyncArea<Model> {
 
 	@Autowired
 	protected SpringSyncService service;
+
+	private Map<String, SignalHandler<Model>> signalHandlers = new ConcurrentHashMap<>();
 
 	public SyncArea<Model> getArea() {
 		return this.area;
@@ -60,10 +68,20 @@ public class SpringSyncArea<Model> {
 	}
 
 	private SyncArea<Model> newSyncArea() {
-		return new SyncArea<Model>(getConfig(), getUserStateStorage(), getSessionStateStorage(), this::process);
+		return new SyncArea<Model>(getConfig(), getUserStateStorage(), getSessionStateStorage(), this::process,
+				this::signal);
 	}
 
 	protected Model process(final Model model, final SyncAreaUser<Model> user) {
 		return model;
+	}
+
+	public void registerSignalHandler(final String signal, final SignalHandler<Model> handler) {
+		this.signalHandlers.put(signal, handler);
+	}
+
+	public Model signal(final Model model, final SyncAreaUser<Model> user, final String signal,
+			final ObjectNode parameters) {
+		return this.signalHandlers.get(signal).handle(model, user, signal, parameters);
 	}
 }
