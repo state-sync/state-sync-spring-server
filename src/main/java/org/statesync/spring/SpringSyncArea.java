@@ -37,12 +37,12 @@ public class SpringSyncArea<Model> {
 		return this.config;
 	}
 
-	protected StateStorage<Model> getSessionStateStorage() {
-		return new InMemoryStateStorage<>(this::newModel);
+	protected StateStorage getSessionStateStorage() {
+		return new InMemoryStateStorage();
 	}
 
-	protected StateStorage<Model> getUserStateStorage() {
-		return new InMemoryStateStorage<>(this::newModel);
+	protected StateStorage getUserStateStorage() {
+		return new InMemoryStateStorage();
 	}
 
 	@PostConstruct
