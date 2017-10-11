@@ -82,6 +82,9 @@ public class SpringSyncArea<Model> {
 
 	public Model signal(final Model model, final SyncAreaUser<Model> user, final String signal,
 			final ObjectNode parameters) {
-		return this.signalHandlers.get(signal).handle(model, user, signal, parameters);
+		final SignalHandler<Model> signalHandler = this.signalHandlers.get(signal);
+		if (signalHandler == null)
+			throw new RuntimeException("Unknown signal '" + signal + "' for area " + this.area.getAreaId());
+		return signalHandler.handle(model, user, signal, parameters);
 	}
 }
