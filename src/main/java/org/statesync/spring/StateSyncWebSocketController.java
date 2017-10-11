@@ -1,6 +1,7 @@
 package org.statesync.spring;
 
 import java.security.Principal;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -16,6 +17,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 @Controller
 public class StateSyncWebSocketController {
+
+	private static final Logger log = Logger.getLogger(StateSyncWebSocketController.class.getName());
 
 	private RequestMessageFactory requestFactory = new RequestMessageFactory();
 	@Autowired
@@ -37,6 +40,12 @@ public class StateSyncWebSocketController {
 		final Principal principal = accessor.getUser();
 		final String externalSessionId = accessor.getSessionId();
 		return this.syncService.connect(principal, externalSessionId);
+	}
+
+	@SubscribeMapping("/session/{sessionToken}")
+	public void sessionSubscribe(final @DestinationVariable String sessionToken,
+			final SimpMessageHeaderAccessor accessor) {
+		log.fine("Trace: webSocket session subscribe " + sessionToken);
 	}
 
 	@MessageMapping("/session/{sessionToken}")
