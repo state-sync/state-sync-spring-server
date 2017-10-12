@@ -52,4 +52,11 @@ public @interface SyncAreaService {
 	 * @return
 	 */
 	String[] serverPush() default { "/" };
+
+	/**
+	 * Server response timeout
+	 *
+	 * @return timeout in milliseconds
+	 */
+	int timeout() default 60_000;
 }

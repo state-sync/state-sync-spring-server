@@ -41,6 +41,7 @@ public class SpringSyncArea<Model> {
 			this.config.setModel((Class<Model>) ann.model());
 			this.config.setServerLocalPrefix(ann.serverLocalPrefix());
 			this.config.setServerPush(ann.serverPush());
+			this.config.setTimeout(ann.timeout());
 		}
 		return this.config;
 	}
