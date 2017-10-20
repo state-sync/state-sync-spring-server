@@ -9,7 +9,7 @@ public class AbstractStateSyncConfig extends AbstractWebSocketMessageBrokerConfi
 
 	@Override
 	public void configureMessageBroker(final MessageBrokerRegistry registry) {
-		registry.enableSimpleBroker("/root", "/session", "/user");
+		registry.enableSimpleBroker("/root", "/session");
 	}
 
 	protected String getAllowedOrigins() {
