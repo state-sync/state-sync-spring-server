@@ -1,6 +1,7 @@
 package org.statesync.spring;
 
 import java.security.Principal;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ public class StateSyncWebSocketController {
 	private static final Logger log = Logger.getLogger(StateSyncWebSocketController.class.getName());
 
 	private RequestMessageFactory requestFactory = new RequestMessageFactory();
+
 	@Autowired
 	private SpringSyncService syncService;
 
@@ -35,34 +37,29 @@ public class StateSyncWebSocketController {
 	 * @param accessor
 	 * @return session initialization command
 	 */
-	@SubscribeMapping("/root")
-	public InitSessionResponse connect(final SimpMessageHeaderAccessor accessor) {
+	@MessageMapping("/init/{sessionToken}")
+	public InitSessionResponse connect(final @DestinationVariable String sessionToken,
+			final SimpMessageHeaderAccessor accessor) {
 		final Principal principal = accessor.getUser();
 		final String externalSessionId = accessor.getSessionId();
-		return this.syncService.connect(principal, externalSessionId);
+		return this.syncService.connect(principal, externalSessionId, sessionToken);
+	}
+
+	@MessageMapping("/request/{sessionToken}")
+	public void request(final @DestinationVariable String sessionToken, final JsonNode cmd,
+			final SimpMessageHeaderAccessor accessor) {
+		try {
+			final RequestMessage request = this.requestFactory.parse(cmd);
+			this.syncService.handle(sessionToken, request);
+		} catch (final Exception e) {
+			log.log(Level.SEVERE, "init failed", e);
+			throw e;
+		}
 	}
 
 	@SubscribeMapping("/session/{sessionToken}")
 	public void sessionSubscribe(final @DestinationVariable String sessionToken,
 			final SimpMessageHeaderAccessor accessor) {
 		log.fine("Trace: webSocket session subscribe " + sessionToken);
-	}
-
-	@MessageMapping("/session/{sessionToken}")
-	public void sessionRequest(final @DestinationVariable String sessionToken, final JsonNode cmd,
-			final SimpMessageHeaderAccessor accessor) {
-		try {
-			final RequestMessage request = this.requestFactory.parse(cmd);
-			this.syncService.handle(sessionToken, request);
-		} catch (final Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
-	}
-
-	@MessageMapping("/user/{userToken}")
-	public void userSubscription(final @DestinationVariable String userToken, final JsonNode cmd,
-			final SimpMessageHeaderAccessor accessor) {
-		// do nothing, Stomp client subscribed to user token
 	}
 }

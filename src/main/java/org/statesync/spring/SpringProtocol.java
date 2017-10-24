@@ -14,7 +14,7 @@ public class SpringProtocol implements SyncOutbound {
 
 	@Override
 	public void send(final String sessionToken, final Message event) {
-		this.simpMessagingTemplate.convertAndSend("/session/" + sessionToken, event);
+		this.simpMessagingTemplate.convertAndSend("/out/" + sessionToken, event);
 	}
 
 }

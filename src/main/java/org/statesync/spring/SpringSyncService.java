@@ -25,8 +25,10 @@ public class SpringSyncService {
 		this.core = new SyncService(this.protocol);
 	}
 
-	public InitSessionResponse connect(final Principal principal, final String externalSessionId) {
-		return this.core.connect(principal == null ? "@anonymous" : principal.getName(), externalSessionId);
+	public InitSessionResponse connect(final Principal principal, final String externalSessionId,
+			final String sessionToken) {
+		return this.core.connect(principal == null ? "@anonymous" : principal.getName(), externalSessionId,
+				sessionToken);
 	}
 
 	public StateSyncInfo getInfo() {

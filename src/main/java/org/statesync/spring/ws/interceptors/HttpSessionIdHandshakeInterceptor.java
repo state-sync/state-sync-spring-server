@@ -22,8 +22,6 @@ public class HttpSessionIdHandshakeInterceptor implements HandshakeInterceptor {
 	public boolean beforeHandshake(final ServerHttpRequest request, final ServerHttpResponse response,
 			final WebSocketHandler wsHandler, final Map<String, Object> attributes) throws Exception {
 		logger.info("Handshake interceptor called!!");
-		// attributes.put(WSConstants.SESSION_ATTR,
-		// UUID.randomUUID().toString());
 		return true;
 	}
 }

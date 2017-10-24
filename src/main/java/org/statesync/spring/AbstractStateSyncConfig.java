@@ -1,5 +1,6 @@
 package org.statesync.spring;
 
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
@@ -9,7 +10,8 @@ public class AbstractStateSyncConfig extends AbstractWebSocketMessageBrokerConfi
 
 	@Override
 	public void configureMessageBroker(final MessageBrokerRegistry registry) {
-		registry.enableSimpleBroker("/root", "/session");
+		registry.enableSimpleBroker("/out");
+		registry.setApplicationDestinationPrefixes("/app");
 	}
 
 	protected String getAllowedOrigins() {
@@ -18,6 +20,18 @@ public class AbstractStateSyncConfig extends AbstractWebSocketMessageBrokerConfi
 
 	protected String getEndpointPath() {
 		return "/state-sync";
+	}
+
+	@Override
+	public void configureClientOutboundChannel(final ChannelRegistration registration) {
+		// temporary solution
+		registration.taskExecutor().corePoolSize(1);
+	}
+
+	@Override
+	public void configureClientInboundChannel(final ChannelRegistration registration) {
+		// temporary solution
+		registration.taskExecutor().corePoolSize(1);
 	}
 
 	@Override
