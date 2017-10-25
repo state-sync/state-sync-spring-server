@@ -2,11 +2,11 @@ package org.statesync.spring;
 
 import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
+import org.springframework.security.config.annotation.web.socket.AbstractSecurityWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.statesync.spring.ws.interceptors.HttpSessionIdHandshakeInterceptor;
 
-public class AbstractStateSyncConfig extends AbstractWebSocketMessageBrokerConfigurer {
+public class AbstractStateSyncConfig extends AbstractSecurityWebSocketMessageBrokerConfigurer {
 
 	@Override
 	public void configureMessageBroker(final MessageBrokerRegistry registry) {
@@ -29,7 +29,7 @@ public class AbstractStateSyncConfig extends AbstractWebSocketMessageBrokerConfi
 	}
 
 	@Override
-	public void configureClientInboundChannel(final ChannelRegistration registration) {
+	public void customizeClientInboundChannel(final ChannelRegistration registration) {
 		// temporary solution
 		registration.taskExecutor().corePoolSize(1);
 	}
