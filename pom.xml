@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>state-sync</groupId>
 	<artifactId>state-sync-spring-server</artifactId>
-	<version>0.0.4</version>
+	<version>0.0.5</version>
 	<name>state-sync-server-java</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -39,7 +39,7 @@
 		<dependency>
 			<groupId>state-sync</groupId>
 			<artifactId>state-sync-java-server</artifactId>
-			<version>0.0.4</version>
+			<version>0.0.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
