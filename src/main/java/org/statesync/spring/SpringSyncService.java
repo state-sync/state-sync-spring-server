@@ -10,7 +10,6 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 import org.springframework.web.socket.messaging.SessionSubscribeEvent;
 import org.springframework.web.socket.messaging.SessionUnsubscribeEvent;
 import org.statesync.SyncService;
-import org.statesync.info.StateSyncInfo;
 import org.statesync.protocol.RequestMessage;
 import org.statesync.protocol.init.InitSessionResponse;
 
@@ -31,17 +30,12 @@ public class SpringSyncService {
 				sessionToken);
 	}
 
-	public StateSyncInfo getInfo() {
-		return this.core.getInfo();
-	}
-
 	public void handle(final String sessionToken, final RequestMessage request) {
 		this.core.handle(sessionToken, request);
 	}
 
 	public void onSessionConnected(final SessionConnectedEvent event) {
 		// TODO Auto-generated method stub
-
 	}
 
 	public void onSessionDisconnect(final SessionDisconnectEvent event) {

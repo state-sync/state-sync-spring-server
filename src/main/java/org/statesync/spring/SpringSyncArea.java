@@ -11,7 +11,7 @@ import org.statesync.InMemoryStateStorage;
 import org.statesync.SignalHandler;
 import org.statesync.StateStorage;
 import org.statesync.SyncArea;
-import org.statesync.SyncAreaUser;
+import org.statesync.SyncAreaApi;
 import org.statesync.config.SyncAreaConfig;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -46,11 +46,7 @@ public class SpringSyncArea<Model> {
 		return this.config;
 	}
 
-	protected StateStorage getSessionStateStorage() {
-		return new InMemoryStateStorage();
-	}
-
-	protected StateStorage getUserStateStorage() {
+	protected StateStorage getStateStorage() {
 		return new InMemoryStateStorage();
 	}
 
@@ -69,11 +65,10 @@ public class SpringSyncArea<Model> {
 	}
 
 	private SyncArea<Model> newSyncArea() {
-		return new SyncArea<Model>(getConfig(), getUserStateStorage(), getSessionStateStorage(), this::process,
-				this::signal);
+		return new SyncArea<Model>(getConfig(), getStateStorage(), this::process, this::signal);
 	}
 
-	protected Model process(final Model model, final SyncAreaUser<Model> user) {
+	protected Model process(final Model model, final SyncAreaApi<Model> user) {
 		return model;
 	}
 
@@ -81,7 +76,7 @@ public class SpringSyncArea<Model> {
 		this.signalHandlers.put(signal, handler);
 	}
 
-	public Model signal(final Model model, final SyncAreaUser<Model> user, final String signal,
+	public Model signal(final Model model, final SyncAreaApi<Model> user, final String signal,
 			final ObjectNode parameters) {
 		final SignalHandler<Model> signalHandler = this.signalHandlers.get(signal);
 		if (signalHandler == null)
