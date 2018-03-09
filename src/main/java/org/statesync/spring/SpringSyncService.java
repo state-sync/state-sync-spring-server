@@ -21,7 +21,8 @@ public class SpringSyncService {
 	@Autowired
 	public SpringSyncService(final SimpMessagingTemplate simpMessagingTemplate) {
 		this.protocol = new SpringProtocol(simpMessagingTemplate);
-		this.core = new SyncService(this.protocol);
+		// TODO: configure
+		this.core = new SyncService(this.protocol, 10);
 	}
 
 	public InitSessionResponse connect(final Principal principal, final String externalSessionId,
