@@ -22,7 +22,7 @@ public class SpringSyncService {
 	public SpringSyncService(final SimpMessagingTemplate simpMessagingTemplate) {
 		this.protocol = new SpringProtocol(simpMessagingTemplate);
 		// TODO: configure
-		this.core = new SyncService(this.protocol, 10);
+		this.core = new SyncService(this.protocol, () -> new SpringContextInheritance(), 10);
 	}
 
 	public InitSessionResponse connect(final Principal principal, final String externalSessionId,
