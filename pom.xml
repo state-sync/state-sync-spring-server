@@ -17,10 +17,6 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<repositories>
-        <repository>
-            <id>rmp-artifactory</id>
-            <url>http://jrepo.adjuggler.ru/artifactory/state-sync</url>
-        </repository>
 		<repository>
 			<id>mvnrepository</id>
 			<url>http://repo.spring.io/milestone</url>
