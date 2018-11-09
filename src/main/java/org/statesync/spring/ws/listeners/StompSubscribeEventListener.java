@@ -20,6 +20,7 @@ public class StompSubscribeEventListener implements ApplicationListener<SessionS
 	@Override
 	public void onApplicationEvent(final SessionSubscribeEvent event)
 	{
+		log.severe("onApplicationEvent" + event.toString());
 		this.syncService.onSubscribe(event);
 		final StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
 		log.severe(headerAccessor.toString());
