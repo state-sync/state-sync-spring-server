@@ -7,7 +7,8 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface SyncSignal {
+public @interface SyncSignal
+{
 
 	/**
 	 * Signal name

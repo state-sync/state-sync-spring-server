@@ -9,14 +9,17 @@ import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.statesync.spring.SpringSyncService;
 
 @Component
-public class StompSessionConnectedEventListener implements ApplicationListener<SessionConnectedEvent> {
+public class StompSessionConnectedEventListener implements ApplicationListener<SessionConnectedEvent>
+{
 	@java.lang.SuppressWarnings("all")
-	private static final java.util.logging.Logger log = java.util.logging.Logger.getLogger(StompSessionConnectedEventListener.class.getName());
+	private static final java.util.logging.Logger log = java.util.logging.Logger
+			.getLogger(StompSessionConnectedEventListener.class.getName());
 	@Autowired
 	private SpringSyncService syncService;
 
 	@Override
-	public void onApplicationEvent(final SessionConnectedEvent event) {
+	public void onApplicationEvent(final SessionConnectedEvent event)
+	{
 		this.syncService.onSessionConnected(event);
 		final StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
 		log.severe(headerAccessor.toString());

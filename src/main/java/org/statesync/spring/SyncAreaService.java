@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Service
-public @interface SyncAreaService {
+public @interface SyncAreaService
+{
 	/**
 	 * Prefix of local client side property
 	 *

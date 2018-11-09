@@ -9,19 +9,30 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
-public class HttpSessionIdHandshakeInterceptor implements HandshakeInterceptor {
+public class HttpSessionIdHandshakeInterceptor implements HandshakeInterceptor
+{
 
 	private static final Logger logger = LoggerFactory.getLogger(HttpSessionIdHandshakeInterceptor.class);
 
 	@Override
 	public void afterHandshake(final ServerHttpRequest request, final ServerHttpResponse response,
-			final WebSocketHandler wsHandler, final Exception ex) {
+			final WebSocketHandler wsHandler, final Exception ex)
+	{
+		if (ex == null)
+		{
+			logger.info("afterHandshake");
+		}
+		else
+		{
+			logger.error("afterHandshake", ex);
+		}
 	}
 
 	@Override
 	public boolean beforeHandshake(final ServerHttpRequest request, final ServerHttpResponse response,
-			final WebSocketHandler wsHandler, final Map<String, Object> attributes) throws Exception {
-		logger.info("Handshake interceptor called!!");
+			final WebSocketHandler wsHandler, final Map<String, Object> attributes) throws Exception
+	{
+		logger.info("beforeHandshake");
 		return true;
 	}
 }

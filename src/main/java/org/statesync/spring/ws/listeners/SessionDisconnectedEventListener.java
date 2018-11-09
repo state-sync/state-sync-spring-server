@@ -9,14 +9,17 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 import org.statesync.spring.SpringSyncService;
 
 @Component
-public class SessionDisconnectedEventListener implements ApplicationListener<SessionDisconnectEvent> {
+public class SessionDisconnectedEventListener implements ApplicationListener<SessionDisconnectEvent>
+{
 	@java.lang.SuppressWarnings("all")
-	private static final java.util.logging.Logger log = java.util.logging.Logger.getLogger(SessionDisconnectedEventListener.class.getName());
+	private static final java.util.logging.Logger log = java.util.logging.Logger
+			.getLogger(SessionDisconnectedEventListener.class.getName());
 	@Autowired
 	private SpringSyncService syncService;
 
 	@Override
-	public void onApplicationEvent(final SessionDisconnectEvent event) {
+	public void onApplicationEvent(final SessionDisconnectEvent event)
+	{
 		this.syncService.onSessionDisconnect(event);
 		final StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
 		log.severe(headerAccessor.toString());

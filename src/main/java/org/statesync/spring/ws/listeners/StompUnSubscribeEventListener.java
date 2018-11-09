@@ -9,14 +9,17 @@ import org.springframework.web.socket.messaging.SessionUnsubscribeEvent;
 import org.statesync.spring.SpringSyncService;
 
 @Component
-public class StompUnSubscribeEventListener implements ApplicationListener<SessionUnsubscribeEvent> {
+public class StompUnSubscribeEventListener implements ApplicationListener<SessionUnsubscribeEvent>
+{
 	@java.lang.SuppressWarnings("all")
-	private static final java.util.logging.Logger log = java.util.logging.Logger.getLogger(StompUnSubscribeEventListener.class.getName());
+	private static final java.util.logging.Logger log = java.util.logging.Logger
+			.getLogger(StompUnSubscribeEventListener.class.getName());
 	@Autowired
 	private SpringSyncService syncService;
 
 	@Override
-	public void onApplicationEvent(final SessionUnsubscribeEvent event) {
+	public void onApplicationEvent(final SessionUnsubscribeEvent event)
+	{
 		this.syncService.onUnsubscribe(event);
 		final StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
 		log.severe(headerAccessor.toString());

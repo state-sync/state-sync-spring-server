@@ -17,7 +17,8 @@ import org.statesync.protocol.init.InitSessionResponse;
 import com.fasterxml.jackson.databind.JsonNode;
 
 @Controller
-public class StateSyncWebSocketController {
+public class StateSyncWebSocketController
+{
 
 	private static final Logger log = Logger.getLogger(StateSyncWebSocketController.class.getName());
 
@@ -27,7 +28,8 @@ public class StateSyncWebSocketController {
 	private SpringSyncService syncService;
 
 	@Autowired
-	public StateSyncWebSocketController(final SpringSyncService syncService) {
+	public StateSyncWebSocketController(final SpringSyncService syncService)
+	{
 		this.syncService = syncService;
 	}
 
@@ -39,7 +41,8 @@ public class StateSyncWebSocketController {
 	 */
 	@MessageMapping("/init/{sessionToken}")
 	public InitSessionResponse connect(final @DestinationVariable String sessionToken,
-			final SimpMessageHeaderAccessor accessor) {
+			final SimpMessageHeaderAccessor accessor)
+	{
 		final Principal principal = accessor.getUser();
 		final String externalSessionId = accessor.getSessionId();
 		return this.syncService.connect(principal, externalSessionId, sessionToken);
@@ -47,11 +50,15 @@ public class StateSyncWebSocketController {
 
 	@MessageMapping("/request/{sessionToken}")
 	public void request(final @DestinationVariable String sessionToken, final JsonNode cmd,
-			final SimpMessageHeaderAccessor accessor) {
-		try {
+			final SimpMessageHeaderAccessor accessor)
+	{
+		try
+		{
 			final RequestMessage request = this.requestFactory.parse(cmd);
 			this.syncService.handle(sessionToken, request);
-		} catch (final Exception e) {
+		}
+		catch (final Exception e)
+		{
 			log.log(Level.SEVERE, "init failed", e);
 			throw e;
 		}
@@ -59,7 +66,8 @@ public class StateSyncWebSocketController {
 
 	@SubscribeMapping("/session/{sessionToken}")
 	public void sessionSubscribe(final @DestinationVariable String sessionToken,
-			final SimpMessageHeaderAccessor accessor) {
+			final SimpMessageHeaderAccessor accessor)
+	{
 		log.fine("Trace: webSocket session subscribe " + sessionToken);
 	}
 }

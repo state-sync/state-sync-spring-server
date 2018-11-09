@@ -14,47 +14,56 @@ import org.statesync.protocol.RequestMessage;
 import org.statesync.protocol.init.InitSessionResponse;
 
 @Service
-public class SpringSyncService {
+public class SpringSyncService
+{
 	private SyncService core;
 	private SpringProtocol protocol;
 
 	@Autowired
-	public SpringSyncService(final SimpMessagingTemplate simpMessagingTemplate) {
+	public SpringSyncService(final SimpMessagingTemplate simpMessagingTemplate)
+	{
 		this.protocol = new SpringProtocol(simpMessagingTemplate);
 		// TODO: configure
 		this.core = new SyncService(this.protocol, () -> new SpringContextInheritance(), 10);
 	}
 
 	public InitSessionResponse connect(final Principal principal, final String externalSessionId,
-			final String sessionToken) {
+			final String sessionToken)
+	{
 		return this.core.connect(principal == null ? "@anonymous" : principal.getName(), externalSessionId,
 				sessionToken);
 	}
 
-	public void handle(final String sessionToken, final RequestMessage request) {
+	public void handle(final String sessionToken, final RequestMessage request)
+	{
 		this.core.handle(sessionToken, request);
 	}
 
-	public void onSessionConnected(final SessionConnectedEvent event) {
+	public void onSessionConnected(final SessionConnectedEvent event)
+	{
 		// TODO Auto-generated method stub
 	}
 
-	public void onSessionDisconnect(final SessionDisconnectEvent event) {
+	public void onSessionDisconnect(final SessionDisconnectEvent event)
+	{
 		final String externalSessionId = event.getSessionId();
 		this.core.disconnectSession(externalSessionId);
 	}
 
-	public void onSubscribe(final SessionSubscribeEvent event) {
+	public void onSubscribe(final SessionSubscribeEvent event)
+	{
 		// TODO Auto-generated method stub
 
 	}
 
-	public void onUnsubscribe(final SessionUnsubscribeEvent event) {
+	public void onUnsubscribe(final SessionUnsubscribeEvent event)
+	{
 		// TODO Auto-generated method stub
 
 	}
 
-	public void register(final SpringSyncArea<?> springSyncArea) {
+	public void register(final SpringSyncArea<?> springSyncArea)
+	{
 		this.core.register(springSyncArea.getArea());
 	}
 }
