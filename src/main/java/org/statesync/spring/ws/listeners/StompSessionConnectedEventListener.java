@@ -23,10 +23,10 @@ public class StompSessionConnectedEventListener implements ApplicationListener<S
 	{
 		try
 		{
-			logger.info("StompSubscribeEventListener.#onApplicationEvent.SessionSubscribeEvent" + event.toString());
+			logger.error("StompSubscribeEventListener.#onApplicationEvent.SessionSubscribeEvent" + event.toString());
 			this.syncService.onSessionConnected(event);
 			final StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
-			logger.info(headerAccessor.toString());
+			logger.error(headerAccessor.toString());
 		}
 		catch (Exception e)
 		{
