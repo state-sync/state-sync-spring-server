@@ -2,17 +2,25 @@ package org.statesync.spring;
 
 import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.scheduling.TaskScheduler;
 import org.springframework.security.config.annotation.web.socket.AbstractSecurityWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.statesync.spring.ws.interceptors.HttpSessionIdHandshakeInterceptor;
 
-public class AbstractStateSyncConfig extends AbstractSecurityWebSocketMessageBrokerConfigurer
+public abstract class AbstractStateSyncConfig extends AbstractSecurityWebSocketMessageBrokerConfigurer
 {
+	protected abstract TaskScheduler getMessageBrokerTaskScheduler();
+
+	public AbstractStateSyncConfig()
+	{
+		super();
+	}
 
 	@Override
 	public void configureMessageBroker(final MessageBrokerRegistry registry)
 	{
-		registry.enableSimpleBroker("/out");
+		registry.enableSimpleBroker("/out") //
+				.setHeartbeatValue(new long[] { 10000, 20000 }).setTaskScheduler(this.getMessageBrokerTaskScheduler());
 		registry.setApplicationDestinationPrefixes("/app");
 	}
 
