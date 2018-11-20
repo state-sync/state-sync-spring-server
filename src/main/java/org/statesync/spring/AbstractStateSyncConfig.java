@@ -19,8 +19,8 @@ public abstract class AbstractStateSyncConfig extends AbstractSecurityWebSocketM
 	@Override
 	public void configureMessageBroker(final MessageBrokerRegistry registry)
 	{
-		registry.enableSimpleBroker("/out") //
-				.setHeartbeatValue(getServerHeartBeat()).setTaskScheduler(this.getMessageBrokerTaskScheduler());
+		registry.enableSimpleBroker("/out"); //
+//				.setHeartbeatValue(getServerHeartBeat()).setTaskScheduler(this.getMessageBrokerTaskScheduler());
 		registry.setApplicationDestinationPrefixes("/app");
 	}
 
