@@ -20,7 +20,7 @@ public abstract class AbstractStateSyncConfig extends AbstractSecurityWebSocketM
 	public void configureMessageBroker(final MessageBrokerRegistry registry)
 	{
 		registry.enableSimpleBroker("/out") //
-				.setHeartbeatValue(new long[] { 10000, 20000 }).setTaskScheduler(this.getMessageBrokerTaskScheduler());
+				.setHeartbeatValue(new long[] { 10000, 10000 }).setTaskScheduler(this.getMessageBrokerTaskScheduler());
 		registry.setApplicationDestinationPrefixes("/app");
 	}
 
